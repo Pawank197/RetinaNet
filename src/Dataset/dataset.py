@@ -87,7 +87,7 @@ class StanfordAerialPedestrianDataset(Dataset):
             labels = torch.zeros((0, ), dtype=torch.int64)
         else:
             boxes = torch.tensor(raw_boxes, dtype=torch.float32)
-            if boxes.ndim() == 1:
+            if boxes.ndim == 1:
                 boxes = boxes.unsqueeze(0)
             labels = torch.tensor(raw_labels, dtype=torch.int64)
 

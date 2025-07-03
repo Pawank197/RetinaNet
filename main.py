@@ -130,11 +130,11 @@ def main():
                 'model_state_dict': model.state_dict(),
                 'optimizer_state_dict': optimizer.state_dict(),
                 'scheduler_state_dict': scheduler.state_dict(),
-                'best_map': best_mAP
+                'best_mAP': best_mAP
             }
             torch.save(checkpoint, CONFIG['CHECKPOINT_PATH'])
 
-    print("\nTraining Complete!/n")
+    print("\nTraining Complete!\n")
     print(f"Best mAP: {best_mAP:.4f}")
 
 
