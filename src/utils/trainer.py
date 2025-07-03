@@ -21,9 +21,11 @@ def train_one_epoch(model, train_loader, optimizer, device):
     """
     model.train()
     total_loss = 0.0
+
+    # wrap the DataLoader with tqdm for progress bar
     progress_bar = tqdm(train_loader, desc="Training", unit="batch", leave=False)
 
-    for i, (images, targets) in enumerate(train_loader):
+    for i, (images, targets) in enumerate(progress_bar):
         images = [image.to(device) for image in images]
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
 
@@ -35,6 +37,7 @@ def train_one_epoch(model, train_loader, optimizer, device):
         optimizer.step()
 
         total_loss += losses.item()
+        # update the progress bar with the current loss
         progress_bar.set_postfix(loss=f"{losses.item():.4f}")
 
     return total_loss / len(train_loader)
@@ -56,7 +59,7 @@ def validate(model, val_loader, device):
     progress_bar = tqdm(val_loader, desc="Validation", unit="batch", leave=False)
 
     with torch.no_grad():
-        for i, (images, targets) in enumerate(val_loader):
+        for i, (images, targets) in enumerate(progress_bar):
             images = [image.to(device) for image in images]
             targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
 

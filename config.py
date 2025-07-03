@@ -13,7 +13,7 @@ CONFIG = {
     "NUM_WORKERS": 2,
     "NUM_CLASSES": 2,
     "TRAINABLE_BACKBONE_LAYERS": 3,
-    "METRICS_FILE": "metrics.csv",
-    "CHECKPOINT_PATH": "checkpoint.pth",
+    "METRICS_FILE": "drive/MyDrive/metrics.csv",
+    "CHECKPOINT_PATH": "drive/MyDrive/checkpoint.pth",
     "RESUME_TRAINING": False # Set to True to resume
 }

@@ -78,18 +78,24 @@ class StanfordAerialPedestrianDataset(Dataset):
                 class_labels=labels
             )
             image = transformed['image']
-            boxes = torch.tensor(transformed['bboxes'], dtype=torch.float32)
-            labels = torch.tensor(transformed['class_labels'], dtype=torch.int64)
+            raw_boxes = transformed['bboxes']
+            raw_labels = transformed['class_labels']
+        
+        # Convert them into approriate tensors:
+        if len(raw_boxes) == 0:
+            boxes = torch.zeros((0, 4), dtype=torch.float32)
+            labels = torch.zeros((0, ), dtype=torch.int64)
         else:
-            boxes = torch.tensor(transformed['bboxes'], dtype=torch.float32)
-            labels = torch.tensor(transformed['class_labels'], dtype=torch.int64)
+            boxes = torch.tensor(raw_boxes, dtype=torch.float32)
+            if boxes.ndim() == 1:
+                boxes = boxes.unsqueeze(0)
+            labels = torch.tensor(raw_labels, dtype=torch.int64)
 
         # Create the target dictionary
         target = {
             'boxes': boxes,
             'labels': labels,
-            'image_id': image_id,
-            'image_path': img_path
+            'image_id': image_id
         }
         
         return image, target
