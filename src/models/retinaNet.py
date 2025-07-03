@@ -41,16 +41,17 @@ def create_model(num_classes=2):
     """
 
     model = torchvision.models.detection.retinanet_resnet50_fpn_v2(
-        weights=RetinaNet_ResNet50_FPN_V2_Weights.COCO_V1,
-        anchor_generator=create_anchors()
+        weights=RetinaNet_ResNet50_FPN_V2_Weights.COCO_V1
     )
+
+    model.anchor_generator=create_anchors()
     num_anchors = model.head.classification_head.num_anchors
 
     model.head.classification_head = RetinaNetClassificationHead(
         in_channels=256,
         num_anchors=num_anchors,
         num_classes=num_classes,
-        norm_layer=partial(torch.nn.GroupNorm, num_groups=32)
+        norm_layer=partial(torch.nn.GroupNorm, 32)
     )
 
     return model
